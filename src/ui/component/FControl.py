@@ -26,22 +26,20 @@ BTN_WIDTH = 3
 
 class FControl(Frame):
 	"""docstring for FControl"""
-	def __init__(self, master = None, openLoad = None, save = None, quit = None, row = 0, rowspan = 1, column = 0, columnspan = 1, **arg):
+	def __init__(self, master = None, **args):
 		super(FControl, self).__init__()
-		Frame.__init__(self, master, arg)
 		# Some conf
-		self.row = row
-		self.rowspan = rowspan
-		self.column = column
-		self.columnspan = columnspan
+		self.row = args['row']
+		# self.rowspan = args['rowspan']
+		self.column = args['column']
+		# self.columnspan = args['columnspan']
 		self.version = version
 		# Method
-		self.openLoad = openLoad
-		self.save = save
-		self.quit = quit
-		# self.width = args['width']
-		self.width = 1200
-		self.height = 100
+		self.openLoad = args['openLoad']
+		self.save = args['save']
+		self.quit = args['quit']
+		self.width = args['width']
+		self.height = args['height']
 		# Set components
 		self.createWidgets()
 
