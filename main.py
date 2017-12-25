@@ -5,9 +5,16 @@
 'main.py'
 '@author LiuChen'
 
-from tkinter import *
+
+import sys
+
+from PyQt5.QtWidgets import *
 
 from src import *
 
-app = Application()
-app.mainloop()
+app = QApplication(sys.argv)
+
+win = MyWidget(width = 1200, height = 560, title = 'Campaign Editor')
+win.show()
+
+sys.exit(app.exec_())

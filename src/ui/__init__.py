@@ -3,5 +3,5 @@
 import sys
 
 sys.path.append('..')
-from src.ui.Application import Application
-Application = Application
+from src.ui.MyWidget import MyWidget
+MyWidget = MyWidget
