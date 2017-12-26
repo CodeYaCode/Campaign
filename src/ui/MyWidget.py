@@ -7,8 +7,8 @@
 
 import sys
 
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
+from PyQt5.QtCore import Qt
 from ctypes.wintypes import *
 
 sys.path.append('../..')
@@ -53,8 +53,8 @@ class MyWidget(QWidget):
 		self.mainLayout.setContentsMargins(0, 0, 0, 0)
 
 		# control
-		self.controlLayout = ControlLayout(fClose = self.close, fLoad = self.load)
-		self.mainLayout.addLayout(self.controlLayout)
+		self.controlWidget = ControlWidget(fClose = self.close, fLoad = self.load)
+		self.mainLayout.addWidget(self.controlWidget)
 		
 		# container
 		self.containerLayout = ContainerLayout()

@@ -1,15 +1,15 @@
-# ControlLayout.py
+# ControlWidget.py
 #!/user/bin/env python3
 # -*- coding: utf-8 -*-
 
-'ControlLayout.py'
+'ControlWidget.py'
 '@author LiuChen'
 
 import sys
 import os
 
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QLabel, QMenu
+from PyQt5.QtCore import Qt
 
 # CONSTANTS
 
@@ -50,15 +50,17 @@ SAVE_BTN_QSS = '''
 	border-radius: 0px;
 ''' % (SAVE_BTN_WIDTH, BTN_HEIGHT, SAVE_BTN_COLOR)
 
-class ControlLayout(QHBoxLayout):
-	"""docstring for ControlLayout"""
+class ControlWidget(QWidget):
+	"""docstring for ControlWidget"""
 	def __init__(self, fClose, fLoad, **arg):
-		super(ControlLayout, self).__init__()
+		super(ControlWidget, self).__init__()
 		# props
 		self.close = fClose
 		self.load = fLoad
+		self.layout = QHBoxLayout(self)
+		self.layout.setContentsMargins(0, 0, 0, 0)
 		# basic conf
-		self.setContentsMargins(0, 0, 0, 0)
+		self.setStyleSheet('background-color: lightblue;')
 		# init ui
 		self.initUI()
 
@@ -67,7 +69,7 @@ class ControlLayout(QHBoxLayout):
 		self.closeBtn = QPushButton('X')
 		self.closeBtn.clicked.connect(self.close)
 		self.closeBtn.setStyleSheet(CLOSE_BTN_QSS)
-		self.addWidget(self.closeBtn)
+		self.layout.addWidget(self.closeBtn)
 
 		# load button
 		self.loadBtn = QPushButton('Load')
@@ -75,22 +77,22 @@ class ControlLayout(QHBoxLayout):
 		# menu
 		menu = self.loadMenu()
 		self.loadBtn.setMenu(menu);
-		self.addWidget(self.loadBtn)
+		self.layout.addWidget(self.loadBtn)
 
 		# save button
 		self.saveBtn = QPushButton('Save')
 		self.saveBtn.setStyleSheet(SAVE_BTN_QSS)
-		self.addWidget(self.saveBtn)
+		self.layout.addWidget(self.saveBtn)
 
 		# current file info
 		self.currentLabel = QLabel('Current campaign: %s' % (''))
-		self.addWidget(self.currentLabel)
+		self.layout.addWidget(self.currentLabel)
 
-		self.addStretch()
+		self.layout.addStretch()
 
 		# version info label
 		self.versionLabel = QLabel('Version: %s' % ('0.0.1'))
-		self.addWidget(self.versionLabel)
+		self.layout.addWidget(self.versionLabel)
 
 	def setCurrentLabel(self, filename = ''):
 		self.currentLabel.setText('Current campaign: %s' % (filename))

@@ -7,7 +7,7 @@
 
 import sys
 
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton
 
 class ConfLayout(QVBoxLayout):
 	"""docstring for ConfLayout"""
