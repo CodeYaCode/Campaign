@@ -1,28 +1,29 @@
-# ContainerLayout.py
+# ContainerWidget.py
 #!/user/bin/env python3
 # -*- coding: utf-8 -*-
 
-'ContainerLayout.py'
+'ContainerWidget.py'
 '@author LiuChen'
 
 import sys
 
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
-from src.ui.layout.PlayerLayout import PlayerLayout
+from src.ui.widget.PlayerWidget import PlayerWidget
 
-class ContainerLayout(QVBoxLayout):
-	"""docstring for ContainerLayout"""
+class ContainerWidget(QWidget):
+	"""docstring for ContainerWidget"""
 	def __init__(self, **args):
-		super(ContainerLayout, self).__init__()
+		super(ContainerWidget, self).__init__()
 		# props
+		self.layout = QVBoxLayout()
 		self.players = []
 		
 	def addPlayer(self, conf = ''):
-		player = PlayerLayout()
+		player = PlayerWidget()
 		self.players.append(player)
 		player.initData(args = conf)
-		self.addLayout(player)
+		self.layout.addWidget(player)
 
 	def initData(self, **args):
 		self.reset()
@@ -35,6 +36,6 @@ class ContainerLayout(QVBoxLayout):
 
 	def reset(self):
 		for p in self.players:
-			self.removeItem(p)
+			self.layout.removeItem(p)
 			p.reset()
 		pass

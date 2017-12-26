@@ -12,7 +12,7 @@ from PyQt5.QtCore import Qt
 from ctypes.wintypes import *
 
 sys.path.append('../..')
-from src.ui.layout import *
+from src.ui.widget import *
 
 #UP,DOWN,LEFT,RIGHT,LEFTTOP,LEFTBOTTOM,RIGHTTOP,RIGHTBOTTOM,UNDIRECT = range(9)
 HTLEFT = 10
@@ -39,7 +39,7 @@ class MyWidget(QWidget):
 			self.h = args['height']
 		if 'title' in args:
 			self.title = args['title']
-		self.needInitLayouts = []
+		self.needInitWidgets = []
 		# init
 		self.resize(self.w, self.h)
 		self.setWindowTitle(self.title)
@@ -57,20 +57,20 @@ class MyWidget(QWidget):
 		self.mainLayout.addWidget(self.controlWidget)
 		
 		# container
-		self.containerLayout = ContainerLayout()
+		self.containerWidget = ContainerWidget()
 		# header
-		self.headerLayout = HeaderLayout(fAddPlayer = self.containerLayout.addPlayer)
+		self.headerWidget = HeaderWidget(fAddPlayer = self.containerWidget.addPlayer)
 		# footer
 		self.footerLayout = FooterLayout(widget = self)
 
 		# need init
-		self.needInitLayouts.append(self.headerLayout)
-		self.needInitLayouts.append(self.containerLayout)
-		self.needInitLayouts.append(self.footerLayout)
+		self.needInitWidgets.append(self.headerWidget)
+		self.needInitWidgets.append(self.containerWidget)
+		self.needInitWidgets.append(self.footerLayout)
 
-		# mainLayout add layout
-		self.mainLayout.addLayout(self.headerLayout)
-		self.mainLayout.addLayout(self.containerLayout)
+		# mainLayout add widget
+		self.mainLayout.addWidget(self.headerWidget)
+		self.mainLayout.addWidget(self.containerWidget)
 		self.mainLayout.addStretch()
 		self.mainLayout.addLayout(self.footerLayout)
 
@@ -85,10 +85,10 @@ class MyWidget(QWidget):
 		s = self._textToObj(archive.readlines())
 		campaign = eval(s)
 		# set current file name
-		self.controlLayout.setCurrentLabel(name)
+		self.controlWidget.setCurrentLabel(name)
 		# init datas
-		for layout in self.needInitLayouts:
-			layout.initData(args = campaign)
+		for widget in self.needInitWidgets:
+			widget.initData(args = campaign)
 
 	def _textToObj(self, text):
 		result = ''

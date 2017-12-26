@@ -1,13 +1,13 @@
-# HeaderLayout.py
+# HeaderWidget.py
 #!/user/bin/env python3
 # -*- coding: utf-8 -*-
 
-'HeaderLayout.py'
+'HeaderWidget.py'
 '@author LiuChen'
 
 import sys
 
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QLabel, QLineEdit, QPushButton
 
 # CONSTANTS
 
@@ -29,14 +29,15 @@ ADD_BTN_QSS = '''
 # SIZE
 CONF_LABEL_WIDTH_PROB = 10
 
-class HeaderLayout(QHBoxLayout):
-	"""docstring for HeaderLayout"""
+class HeaderWidget(QWidget):
+	"""docstring for HeaderWidget"""
 	def __init__(self, fAddPlayer, **args):
-		super(HeaderLayout, self).__init__()
+		super(HeaderWidget, self).__init__()
 		# props
 		self.addPlayer = fAddPlayer
+		self.layout = QHBoxLayout(self)
 		# basic conf
-		self.setContentsMargins(0, 0, 0, 0)
+		self.layout.setContentsMargins(0, 0, 0, 0)
 
 		# init content
 		self.initUI()
@@ -45,33 +46,33 @@ class HeaderLayout(QHBoxLayout):
 		# camp_id
 		self.campIdLabel = QLabel('camp_id')
 		# self.campIdLabel.setStyleSheet('background-color: lightgray;')
-		self.addWidget(self.campIdLabel)
+		self.layout.addWidget(self.campIdLabel)
 		self.campIdEdit = QLineEdit()
-		self.addWidget(self.campIdEdit)
-		self.addStretch()
+		self.layout.addWidget(self.campIdEdit)
+		self.layout.addStretch()
 
 		# map_id
 		self.mapIdLabel = QLabel('map_id')
 		# self.mapIdLabel.setStyleSheet('background-color: lightgray;')
-		self.addWidget(self.mapIdLabel)
+		self.layout.addWidget(self.mapIdLabel)
 		self.mapIdEdit = QLineEdit()
-		self.addWidget(self.mapIdEdit)
-		self.addStretch()
+		self.layout.addWidget(self.mapIdEdit)
+		self.layout.addStretch()
 
 		# intro
 		self.introLabel = QLabel('intro')
 		# self.introLabel.setStyleSheet('background-color: lightgray;')
-		self.addWidget(self.introLabel)
+		self.layout.addWidget(self.introLabel)
 		self.introEdit = QLineEdit()
-		self.addWidget(self.introEdit)
+		self.layout.addWidget(self.introEdit)
 
-		self.addStretch()
+		self.layout.addStretch()
 
 		# addPlayer
 		self.addPlayerBtn = QPushButton('Add player')
 		self.addPlayerBtn.clicked.connect(self.addPlayer)
 		self.addPlayerBtn.setStyleSheet(ADD_BTN_QSS)
-		self.addWidget(self.addPlayerBtn)
+		self.layout.addWidget(self.addPlayerBtn)
 
 	# initial datas
 	def initData(self, **args):

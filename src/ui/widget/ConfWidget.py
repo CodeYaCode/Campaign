@@ -1,19 +1,20 @@
-# ConfLayout.py
+# ConfWidget.py
 #!/user/bin/env python3
 # -*- coding: utf-8 -*-
 
-'ConfLayout.py'
+'ConfWidget.py'
 '@author LiuChen'
 
 import sys
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton
 
-class ConfLayout(QVBoxLayout):
-	"""docstring for ConfLayout"""
+class ConfWidget(QWidget):
+	"""docstring for ConfWidget"""
 	def __init__(self, catagory, **args):
-		super(ConfLayout, self).__init__()
+		super(ConfWidget, self).__init__()
 		# props
+		self.layout = QVBoxLayout()
 		self.widgets = []
 		# init ui
 		self.setContentsMargins(0, 0, 0, 0)
@@ -22,15 +23,15 @@ class ConfLayout(QVBoxLayout):
 	def initUI(self, catagory, args):
 		self.addBtn = QPushButton('Add')
 		self.addBtn.clicked.connect(lambda: print('hello %s' % args))
-		self.addWidget(self.addBtn)
+		self.layout.addWidget(self.addBtn)
 		if 'args' in args:
 			args = args['args']
 			if catagory in args:
 				btn = QPushButton(catagory)
-				self.addWidget(btn)
+				self.layout.addWidget(btn)
 				self.widgets.append(btn)
 				btn = QPushButton(catagory)
-				self.addWidget(btn)
+				self.layout.addWidget(btn)
 				self.widgets.append(btn)
 
 	def reset(self):
