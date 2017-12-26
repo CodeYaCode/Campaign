@@ -31,6 +31,7 @@ class MyWidget(QWidget):
 		self.resize(self.width, self.height)
 		self.setWindowTitle(self.title)
 		self.setWindowFlags(Qt.FramelessWindowHint)
+		self.setStyleSheet('background-color: lightgray;')
 		# set gui content
 		self.initUI()
 
@@ -38,11 +39,11 @@ class MyWidget(QWidget):
 		# main layout
 		self.mainLayout = QVBoxLayout()
 		# control
-		self.controlLayout = ControlLayout(self.close)
+		self.controlLayout = ControlLayout(self.close, self)
 		self.mainLayout.addLayout(self.controlLayout)
+		self.mainLayout.addStretch()
 		# set layout
 		self.setLayout(self.mainLayout)
-		pass
 
 	def show(self):
 		super().show()

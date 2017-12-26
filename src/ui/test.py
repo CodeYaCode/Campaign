@@ -1,84 +1,108 @@
-#-*- coding:utf-8 -*-
-'''
-Basic Layout
-'''
-__author__ = 'Tony Zhu'
 import sys
-from PyQt5.QtGui import  QPixmap
-from PyQt5.QtWidgets import QWidget, QApplication, QGroupBox, QPushButton, QLabel, QHBoxLayout,  QVBoxLayout, QGridLayout, QFormLayout, QLineEdit, QTextEdit
 
-class TianGong(QWidget):
-    def __init__(self):
-        super(TianGong,self).__init__()
-        self.initUi()
-
-    def initUi(self):
-        # self.createGridGroupBox()
-        # self.creatVboxGroupBox()
-        # self.creatFormGroupBox()
-        mainLayout = QVBoxLayout()
-        hboxLayout = QHBoxLayout()
-        # hboxLayout.addStretch()
-        hboxLayout.addWidget(QPushButton('Push me'))
-        hboxLayout.addWidget(QPushButton('Push me'))
-        # hboxLayout.addWidget(self.gridGroupBox)
-        # hboxLayout.addWidget(self.vboxGroupBox)
-        mainLayout.addLayout(hboxLayout)
-        # mainLayout.addWidget(self.formGroupBox)
-        self.setLayout(mainLayout)
-
-    def createGridGroupBox(self):
-        self.gridGroupBox = QGroupBox("Grid layout")
-        layout = QGridLayout()
-
-        nameLabel = QLabel("中文名称")
-        nameLineEdit = QLineEdit("天宫二号")
-        emitLabel = QLabel("发射地点")
-        emitLineEdit = QLineEdit("酒泉中心")
-        timeLabel = QLabel("发射时间")
-        timeLineEdit = QLineEdit("9月15日")
-        imgeLabel = QLabel()
-        pixMap = QPixmap("tiangong.png")
-        imgeLabel.setPixmap(pixMap)
-        layout.setSpacing(10) 
-        layout.addWidget(nameLabel,1,0)
-        layout.addWidget(nameLineEdit,1,1)
-        layout.addWidget(emitLabel,2,0)
-        layout.addWidget(emitLineEdit,2,1)
-        layout.addWidget(timeLabel,3,0)
-        layout.addWidget(timeLineEdit,3,1)
-        layout.addWidget(imgeLabel,0,2,4,1)
-        layout.setColumnStretch(1, 10)
-        self.gridGroupBox.setLayout(layout)
-        self.setWindowTitle('Basic Layout')
-
-    def creatVboxGroupBox(self):
-        self.vboxGroupBox = QGroupBox("Vbox layout")
-        layout = QVBoxLayout() 
-        nameLabel = QLabel("科研任务：")
-        bigEditor = QTextEdit()
-        bigEditor.setPlainText("搭载了空间冷原子钟等14项应用载荷，以及失重心血管研究等航天医学实验设备 "
-                "开展空间科学及技术试验.")
-        layout.addWidget(nameLabel)
-        layout.addWidget(bigEditor)
-        self.vboxGroupBox.setLayout(layout)
-
-    def creatFormGroupBox(self):
-        self.formGroupBox = QGroupBox("Form layout")
-        layout = QFormLayout()
-        performanceLabel = QLabel("性能特点：")
-        performanceEditor = QLineEdit("舱内设计更宜居方便天宫生活")
-        planLabel = QLabel("发射规划：")
-        planEditor = QTextEdit()
-        planEditor.setPlainText("2020年之前，中国计划初步完成空间站建设")
-        layout.addRow(performanceLabel,performanceEditor)
-        layout.addRow(planLabel,planEditor)
-
-        self.formGroupBox.setLayout(layout)
-
-
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QWidget, QApplication
+from PyQt5.QtCore import Qt
+import sip
+from ctypes.wintypes import *
+from PyQt5.QtWidgets import (QWidget, QLabel,
+                             QComboBox, QApplication)
+ 
+#print (help(MSG))
+PADDING = 2
+#UP,DOWN,LEFT,RIGHT,LEFTTOP,LEFTBOTTOM,RIGHTTOP,RIGHTBOTTOM,UNDIRECT = range(9)
+HTLEFT = 10
+HTRIGHT = 11
+HTTOP = 12
+HTTOPLEFT = 13
+HTTOPRIGHT = 14
+HTBOTTOM = 15
+HTBOTTOMLEFT = 16
+HTBOTTOMRIGHT = 17
+HTCAPTION = 2
+ 
+class CustomWidget(QWidget):
+    def __init__(self,parent=None):
+        QWidget.__init__(self,parent)
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.initUI()
+ 
+    def isInTitle(self, xPos, yPos):
+        return yPos < 30
+ 
+    def GET_X_LPARAM(self, param):
+        return param & 0xffff
+ 
+    def GET_Y_LPARAM(self, param):
+        return param >> 16
+ 
+    def nativeEvent(self,eventType,message):
+        result = 0
+        msg2 = ctypes.wintypes.MSG.from_address(message.__int__())
+        minV,maxV = 1,20
+        if msg2.message == 0x0084:
+            #print(msg2)
+            xPos = self.GET_X_LPARAM(msg2.lParam) - self.frameGeometry().x()
+            yPos = self.GET_Y_LPARAM(msg2.lParam) - self.frameGeometry().y()
+#             if self.childAt(xPos,yPos) == 0:
+#                 result = HTCAPTION
+#             else:
+#                 return (False,result)
+            if(xPos > minV and xPos < maxV):
+                result = HTLEFT
+            elif(xPos > (self.width() - maxV) and xPos < (self.width() - minV)):
+                result = HTRIGHT
+            elif(yPos > minV and yPos < maxV):
+                result = HTTOP
+            elif(yPos > (self.height() - maxV) and yPos < (self.height() - minV)):
+                result = HTBOTTOM
+            elif(xPos > minV and xPos < maxV and yPos > minV and yPos < maxV):
+                result = HTTOPLEFT
+            elif(xPos > (self.width() - maxV) and xPos < (self.width() - minV) and yPos > minV and yPos < maxV):
+                result = HTTOPRIGHT
+            elif(xPos > minV and xPos < maxV and yPos > (self.height() - maxV) and yPos < (self.height() - minV)):
+                result = HTBOTTOMLEFT
+            elif(xPos > (self.width() - maxV) and xPos < (self.width() - minV) and yPos > (self.height() - maxV) and yPos < (self.height() - minV)):
+                result = HTBOTTOMRIGHT
+            else:
+                result = HTCAPTION
+            return (True,result)
+        ret= QWidget.nativeEvent(self,eventType,message)
+        return ret
+ 
+    def initUI(self):
+        self.lb1 = QLabel("Ubuntu", self)
+        combo = QComboBox(self)
+        combo.addItem("Ubuntu")
+        combo.addItem("Mandriva")
+        combo.addItem("Fedora")
+        combo.addItem("Arch")
+        combo.addItem("Gentoo")
+ 
+        combo.move(50, 50)
+        self.lb1.move(50, 150)
+ 
+        combo.activated[str].connect(self.onActivated)
+        self.setGeometry(300, 300, 300, 200)
+        self.setWindowTitle('QComboBox')
+        self.show()
+ 
+    def onActivated(self, text):
+        self.lb1.setText(text)
+        self.lb1.adjustSize()
+ 
+ 
+ 
+ 
+ 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = TianGong()
-    ex.show()
-    sys.exit(app.exec_())
+    app = QApplication([])
+    try:
+        w = CustomWidget ()
+        w.show()
+    except:
+        import traceback
+        traceback.print_exc()
+ 
+    app.exec_()
