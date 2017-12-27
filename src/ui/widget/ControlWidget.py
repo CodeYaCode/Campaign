@@ -29,26 +29,30 @@ SAVE_BTN_WIDTH  = 60
 CLOSE_BTN_QSS = '''
 	width: %s;
 	height: %s;
-	font-size: 14px;
 	color: white;
+	border: 0;
+	margin: 0;
 	background-color: %s;
-	border-radius: 0px;
+
 ''' % (CLOSE_BTN_WIDTH, BTN_HEIGHT, CLOSE_BTN_COLOR)
 
 LOAD_BTN_QSS = '''
 	width: %s;
 	height: %s;
 	color: white;
+	border: 0;
+	margin: 0;
 	background-color: %s;
-	border-radius: 0px;
+
 ''' % (LOAD_BTN_WIDTH, BTN_HEIGHT, LOAD_BTN_COLOR)
 
 SAVE_BTN_QSS = '''
 	width: %s;
 	height: %s;
 	color: white;
+	border: 0;
+	margin-right: 5;
 	background-color: %s;
-	border-radius: 0px;
 ''' % (SAVE_BTN_WIDTH, BTN_HEIGHT, SAVE_BTN_COLOR)
 
 class ControlWidget(QWidget):
@@ -59,7 +63,10 @@ class ControlWidget(QWidget):
 		self.close = fClose
 		self.load = fLoad
 		self.mainLayout = QHBoxLayout(self)
+		# 外边距
 		self.mainLayout.setContentsMargins(0, 0, 0, 0)
+		# 间隙
+		self.mainLayout.setSpacing(0)
 		# basic conf
 		pal = QPalette(self.palette());
 		pal.setColor(QPalette.Background, Qt.gray);
@@ -96,6 +103,7 @@ class ControlWidget(QWidget):
 
 		# version info label
 		self.versionLabel = QLabel('Version: %s' % ('0.0.1'))
+		self.versionLabel.setStyleSheet('margin-right: 5')
 		self.mainLayout.addWidget(self.versionLabel)
 
 	def setCurrentLabel(self, filename = ''):

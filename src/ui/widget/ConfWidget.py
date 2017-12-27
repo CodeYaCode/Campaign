@@ -9,19 +9,32 @@ import sys
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QInputDialog
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPalette
+from PyQt5.QtGui import QPalette, QColor
 
 from src.conf.propConf import propConf
 from src.ui.widget.DetailDialog import DetailDialog
 
 # CONSTANTS
 
+# COLOR
+ADD_BTN_COLOR  = '#5FBA7D'
+CONF_BTN_COLOR = '#317EF3'
+
 # QSS
+ADD_BTN_QSS = '''
+	height: 25px;
+	border: none;
+	color: white;
+	background-color: %s
+''' % (ADD_BTN_COLOR)
+
 BTN_STYLE = '''
-	QPushButton:hover:!pressed { background-color: rgb(167, 205, 255);
-    border-style: outset;
-    border-width: 1px; border-color: green; }
-'''
+	height: 25px;
+	border: 0;
+	margin-top: 2px;
+	color: white;
+	background-color: %s
+''' % (CONF_BTN_COLOR)
 
 class ConfWidget(QWidget):
 	"""docstring for ConfWidget"""
@@ -31,11 +44,12 @@ class ConfWidget(QWidget):
 		# main layout
 		self.mainLayout = QVBoxLayout(self)
 		self.mainLayout.setContentsMargins(0, 0, 0, 0)
+		self.mainLayout.setSpacing(0)
 
 		self.widgets = []
 		# basic conf
 		pal = QPalette(self.palette());
-		pal.setColor(QPalette.Background, Qt.gray);
+		pal.setColor(QPalette.Background, QColor(23, 23, 23, 23));
 		self.setAutoFillBackground(True);
 		self.setPalette(pal);
 		# init ui
@@ -43,6 +57,7 @@ class ConfWidget(QWidget):
 
 	def initUI(self, catagory, args):
 		self.addBtn = QPushButton('Add')
+		self.addBtn.setStyleSheet(ADD_BTN_QSS)
 		self.addBtn.clicked.connect(lambda: print('hello %s' % args))
 		self.mainLayout.addWidget(self.addBtn)
 		if 'args' in args:

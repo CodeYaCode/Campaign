@@ -9,7 +9,10 @@
 
 propConf = {
 	'player' :  {
-
+		'campPid': 'campPid',
+		'name'	 : '玩家名',
+		'x'		 : 'X',
+		'y'		 : 'Y',
 	},
 	'generals':  {
 		# 需要和archive中的字段名匹配
