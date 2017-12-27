@@ -35,9 +35,9 @@ class HeaderWidget(QWidget):
 		super(HeaderWidget, self).__init__()
 		# props
 		self.addPlayer = fAddPlayer
-		self.layout = QHBoxLayout(self)
+		self.mainLayout = QHBoxLayout(self)
 		# basic conf
-		self.layout.setContentsMargins(0, 0, 0, 0)
+		self.mainLayout.setContentsMargins(0, 0, 0, 0)
 
 		# init content
 		self.initUI()
@@ -46,33 +46,33 @@ class HeaderWidget(QWidget):
 		# camp_id
 		self.campIdLabel = QLabel('camp_id')
 		# self.campIdLabel.setStyleSheet('background-color: lightgray;')
-		self.layout.addWidget(self.campIdLabel)
+		self.mainLayout.addWidget(self.campIdLabel)
 		self.campIdEdit = QLineEdit()
-		self.layout.addWidget(self.campIdEdit)
-		self.layout.addStretch()
+		self.mainLayout.addWidget(self.campIdEdit)
+		self.mainLayout.addStretch()
 
 		# map_id
 		self.mapIdLabel = QLabel('map_id')
 		# self.mapIdLabel.setStyleSheet('background-color: lightgray;')
-		self.layout.addWidget(self.mapIdLabel)
+		self.mainLayout.addWidget(self.mapIdLabel)
 		self.mapIdEdit = QLineEdit()
-		self.layout.addWidget(self.mapIdEdit)
-		self.layout.addStretch()
+		self.mainLayout.addWidget(self.mapIdEdit)
+		self.mainLayout.addStretch()
 
 		# intro
 		self.introLabel = QLabel('intro')
 		# self.introLabel.setStyleSheet('background-color: lightgray;')
-		self.layout.addWidget(self.introLabel)
+		self.mainLayout.addWidget(self.introLabel)
 		self.introEdit = QLineEdit()
-		self.layout.addWidget(self.introEdit)
+		self.mainLayout.addWidget(self.introEdit)
 
-		self.layout.addStretch()
+		self.mainLayout.addStretch()
 
 		# addPlayer
 		self.addPlayerBtn = QPushButton('Add player')
 		self.addPlayerBtn.clicked.connect(self.addPlayer)
 		self.addPlayerBtn.setStyleSheet(ADD_BTN_QSS)
-		self.layout.addWidget(self.addPlayerBtn)
+		self.mainLayout.addWidget(self.addPlayerBtn)
 
 	# initial datas
 	def initData(self, **args):

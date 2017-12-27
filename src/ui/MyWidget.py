@@ -40,6 +40,10 @@ class MyWidget(QWidget):
 		if 'title' in args:
 			self.title = args['title']
 		self.needInitWidgets = []
+		# main layout
+		self.mainLayout = QVBoxLayout(self)
+		self.mainLayout.setContentsMargins(0, 0, 0, 0)
+
 		# init
 		self.resize(self.w, self.h)
 		self.setWindowTitle(self.title)
@@ -48,10 +52,6 @@ class MyWidget(QWidget):
 		self.initUI()
 
 	def initUI(self):
-		# main layout
-		self.mainLayout = QVBoxLayout()
-		self.mainLayout.setContentsMargins(0, 0, 0, 0)
-
 		# control
 		self.controlWidget = ControlWidget(fClose = self.close, fLoad = self.load)
 		self.mainLayout.addWidget(self.controlWidget)
@@ -61,18 +61,18 @@ class MyWidget(QWidget):
 		# header
 		self.headerWidget = HeaderWidget(fAddPlayer = self.containerWidget.addPlayer)
 		# footer
-		self.footerLayout = FooterLayout(widget = self)
+		self.footerWidget = FooterWidget()
 
 		# need init
 		self.needInitWidgets.append(self.headerWidget)
 		self.needInitWidgets.append(self.containerWidget)
-		self.needInitWidgets.append(self.footerLayout)
+		self.needInitWidgets.append(self.footerWidget)
 
 		# mainLayout add widget
 		self.mainLayout.addWidget(self.headerWidget)
 		self.mainLayout.addWidget(self.containerWidget)
 		self.mainLayout.addStretch()
-		self.mainLayout.addLayout(self.footerLayout)
+		self.mainLayout.addWidget(self.footerWidget)
 
 		# set layout
 		self.setLayout(self.mainLayout)

@@ -10,6 +10,7 @@ import os
 
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QLabel, QMenu
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPalette
 
 # CONSTANTS
 
@@ -57,10 +58,13 @@ class ControlWidget(QWidget):
 		# props
 		self.close = fClose
 		self.load = fLoad
-		self.layout = QHBoxLayout(self)
-		self.layout.setContentsMargins(0, 0, 0, 0)
+		self.mainLayout = QHBoxLayout(self)
+		self.mainLayout.setContentsMargins(0, 0, 0, 0)
 		# basic conf
-		self.setStyleSheet('background-color: lightblue;')
+		pal = QPalette(self.palette());
+		pal.setColor(QPalette.Background, Qt.gray);
+		self.setAutoFillBackground(True);
+		self.setPalette(pal);
 		# init ui
 		self.initUI()
 
@@ -69,7 +73,7 @@ class ControlWidget(QWidget):
 		self.closeBtn = QPushButton('X')
 		self.closeBtn.clicked.connect(self.close)
 		self.closeBtn.setStyleSheet(CLOSE_BTN_QSS)
-		self.layout.addWidget(self.closeBtn)
+		self.mainLayout.addWidget(self.closeBtn)
 
 		# load button
 		self.loadBtn = QPushButton('Load')
@@ -77,22 +81,22 @@ class ControlWidget(QWidget):
 		# menu
 		menu = self.loadMenu()
 		self.loadBtn.setMenu(menu);
-		self.layout.addWidget(self.loadBtn)
+		self.mainLayout.addWidget(self.loadBtn)
 
 		# save button
 		self.saveBtn = QPushButton('Save')
 		self.saveBtn.setStyleSheet(SAVE_BTN_QSS)
-		self.layout.addWidget(self.saveBtn)
+		self.mainLayout.addWidget(self.saveBtn)
 
 		# current file info
 		self.currentLabel = QLabel('Current campaign: %s' % (''))
-		self.layout.addWidget(self.currentLabel)
+		self.mainLayout.addWidget(self.currentLabel)
 
-		self.layout.addStretch()
+		self.mainLayout.addStretch()
 
 		# version info label
 		self.versionLabel = QLabel('Version: %s' % ('0.0.1'))
-		self.layout.addWidget(self.versionLabel)
+		self.mainLayout.addWidget(self.versionLabel)
 
 	def setCurrentLabel(self, filename = ''):
 		self.currentLabel.setText('Current campaign: %s' % (filename))

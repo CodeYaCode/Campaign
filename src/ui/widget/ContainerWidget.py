@@ -16,14 +16,16 @@ class ContainerWidget(QWidget):
 	def __init__(self, **args):
 		super(ContainerWidget, self).__init__()
 		# props
-		self.layout = QVBoxLayout()
 		self.players = []
+		# main layout
+		self.mainLayout = QVBoxLayout(self)
+		self.mainLayout.setContentsMargins(0, 0, 0, 0)
 		
 	def addPlayer(self, conf = ''):
 		player = PlayerWidget()
 		self.players.append(player)
 		player.initData(args = conf)
-		self.layout.addWidget(player)
+		self.mainLayout.addWidget(player)
 
 	def initData(self, **args):
 		self.reset()
@@ -36,6 +38,6 @@ class ContainerWidget(QWidget):
 
 	def reset(self):
 		for p in self.players:
-			self.layout.removeItem(p)
+			self.mainLayout.removeWidget(p)
 			p.reset()
 		pass
