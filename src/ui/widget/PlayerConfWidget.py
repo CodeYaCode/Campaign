@@ -7,15 +7,23 @@
 
 import sys
 
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QInputDialog, QLabel, QLineEdit
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QInputDialog, QLabel
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPalette
+from PyQt5.QtGui import QPalette, QColor
 
 from src.conf.propConf import propConf
 
 # COLOR
 DELETE_BTN_COLOR = '#F54545'
-SAVE_BTN_COLOR  = '#5FBA7D'
+
+# QSS
+DELETE_BTN_QSS = '''
+	width: 60px;
+	height: 20px;
+	border: 0;
+	color: white;
+	background-color: %s
+''' % (DELETE_BTN_COLOR)
 
 class PlayerConfWidget(QWidget):
 	"""docstring for PlayerConfWidget"""
@@ -29,7 +37,7 @@ class PlayerConfWidget(QWidget):
 		self.widgets = []
 		# basic conf
 		pal = QPalette(self.palette());
-		pal.setColor(QPalette.Background, Qt.gray);
+		pal.setColor(QPalette.Background, QColor('#DDD'));
 		self.setAutoFillBackground(True);
 		self.setPalette(pal);
 		# init ui
@@ -38,30 +46,28 @@ class PlayerConfWidget(QWidget):
 	def initUI(self, args):
 		conf = propConf['player']
 		args = args['args']
-		print(args)
-		for key in conf.keys():
-			value = conf[key]
-			label = QLabel(value)
-			self.mainLayout.addWidget(label)
-			self.widgets.append(label)
+		brief = conf['brief']
+		print(brief)
+		for key in brief.keys():
+			value = brief[key]
+			name = '%s : %s  '
 			if 'player' in args:
 				p = args['player']
-				btn = QLineEdit(str(p[key]))
-				self.mainLayout.addWidget(btn)
-				self.widgets.append(btn)
+				name = name % (value, str(p[key]))
 			else:
-				edit = QLineEdit()
-				self.mainLayout.addWidget(edit)
-				self.widgets.append(edit)
-
+				name = 'New player'
+			label = QLabel(name)
+			self.mainLayout.addWidget(label)
+			self.widgets.append(label)
+			
 		self.mainLayout.addStretch()
 
-		self.saveBtn = QPushButton('Save')
-		self.saveBtn.setStyleSheet('border-radius: 0;background-color: %s' % (SAVE_BTN_COLOR))
-		self.mainLayout.addWidget(self.saveBtn)
+		# self.saveBtn = QPushButton('Save')
+		# self.saveBtn.setStyleSheet('border-radius: 0;background-color: %s' % (SAVE_BTN_COLOR))
+		# self.mainLayout.addWidget(self.saveBtn)
 
 		self.deleteBtn = QPushButton('Delete')
-		self.deleteBtn.setStyleSheet('border-radius: 0;background-color: %s' % (DELETE_BTN_COLOR))
+		self.deleteBtn.setStyleSheet(DELETE_BTN_QSS)
 		self.mainLayout.addWidget(self.deleteBtn)
 
 	def reset(self):

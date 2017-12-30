@@ -9,10 +9,19 @@
 
 propConf = {
 	'player' :  {
-		'campPid': 'campPid',
-		'name'	 : '玩家名',
-		'x'		 : 'X',
-		'y'		 : 'Y',
+		# 需要和archive中的字段名匹配
+		'brief' : {
+			# 主面板显示的信息，key对应archive中的字段名，value为显示的字段名
+			'campPid': 'campPid',
+			'name'	 : '玩家名',
+			'x'		 : 'X',
+			'y'		 : 'Y',
+		},
+		'detail': {
+			'generalId': '武将id',
+			'name': '名称',
+			'att': '攻击力',
+		}
 	},
 	'generals':  {
 		# 需要和archive中的字段名匹配

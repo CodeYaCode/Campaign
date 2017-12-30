@@ -10,7 +10,7 @@ import os
 
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QLabel, QMenu
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPalette
+from PyQt5.QtGui import QPalette, QColor
 
 # CONSTANTS
 
@@ -22,10 +22,14 @@ SAVE_BTN_COLOR  = '#5FBA7D'
 # SIZE
 BTN_HEIGHT      = 25
 CLOSE_BTN_WIDTH = BTN_HEIGHT
-LOAD_BTN_WIDTH  = 80
+LOAD_BTN_WIDTH  = 200
 SAVE_BTN_WIDTH  = 60
 
 # QSS
+MAIN_QSS = '''
+	QWidget{border: 3px solid green;}
+'''
+
 CLOSE_BTN_QSS = '''
 	width: %s;
 	height: %s;
@@ -46,12 +50,17 @@ LOAD_BTN_QSS = '''
 
 ''' % (LOAD_BTN_WIDTH, BTN_HEIGHT, LOAD_BTN_COLOR)
 
+LOAD_MENU_QSS = '''
+	width: %s;
+	color: white;
+	background-color: %s;
+''' % (LOAD_BTN_WIDTH, LOAD_BTN_COLOR)
+
 SAVE_BTN_QSS = '''
 	width: %s;
 	height: %s;
 	color: white;
 	border: 0;
-	margin-right: 5;
 	background-color: %s;
 ''' % (SAVE_BTN_WIDTH, BTN_HEIGHT, SAVE_BTN_COLOR)
 
@@ -68,10 +77,11 @@ class ControlWidget(QWidget):
 		# 间隙
 		self.mainLayout.setSpacing(0)
 		# basic conf
-		pal = QPalette(self.palette());
-		pal.setColor(QPalette.Background, Qt.gray);
-		self.setAutoFillBackground(True);
-		self.setPalette(pal);
+		# self.setStyleSheet(MAIN_QSS)
+		pal = QPalette(self.palette())
+		pal.setColor(QPalette.Background, QColor('#DDD'))
+		self.setAutoFillBackground(True)
+		self.setPalette(pal)
 		# init ui
 		self.initUI()
 
@@ -82,6 +92,13 @@ class ControlWidget(QWidget):
 		self.closeBtn.setStyleSheet(CLOSE_BTN_QSS)
 		self.mainLayout.addWidget(self.closeBtn)
 
+		# # version info label
+		# self.versionLabel = QLabel('Version: %s' % ('0.0.1'))
+		# self.versionLabel.setStyleSheet('margin-right: 5')
+		# self.mainLayout.addWidget(self.versionLabel)
+
+		self.mainLayout.addStretch()
+
 		# load button
 		self.loadBtn = QPushButton('Load')
 		self.loadBtn.setStyleSheet(LOAD_BTN_QSS)
@@ -90,24 +107,15 @@ class ControlWidget(QWidget):
 		self.loadBtn.setMenu(menu);
 		self.mainLayout.addWidget(self.loadBtn)
 
+		self.mainLayout.addStretch()
+
 		# save button
 		self.saveBtn = QPushButton('Save')
 		self.saveBtn.setStyleSheet(SAVE_BTN_QSS)
 		self.mainLayout.addWidget(self.saveBtn)
 
-		# current file info
-		self.currentLabel = QLabel('Current campaign: %s' % (''))
-		self.mainLayout.addWidget(self.currentLabel)
-
-		self.mainLayout.addStretch()
-
-		# version info label
-		self.versionLabel = QLabel('Version: %s' % ('0.0.1'))
-		self.versionLabel.setStyleSheet('margin-right: 5')
-		self.mainLayout.addWidget(self.versionLabel)
-
 	def setCurrentLabel(self, filename = ''):
-		self.currentLabel.setText('Current campaign: %s' % (filename))
+		self.loadBtn.setText(filename)
 
 	def getArchive(self):
 		rootPath = sys.path[0] + '/src/archive'
@@ -118,6 +126,7 @@ class ControlWidget(QWidget):
 
 	def loadMenu(self):
 		menu = QMenu()
+		menu.setStyleSheet(LOAD_MENU_QSS)
 		archive = self.getArchive()
 		temp = {}
 		for a in archive:

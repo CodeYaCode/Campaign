@@ -5,10 +5,18 @@
 	'conf'  : [
 		{
 			'player': {
-				'campPid': 0,
-				'name'	 : 'player',
-				'x'		 : 1,
-				'y'		 : 2,
+				'campPid'  : 0,
+				'name'	   : 'player',
+				'x'		   : 1,
+				'y'		   : 2,
+				'top'      : 5,
+				'bottom'   : 4,
+				'left'     : 3,
+				'right'    : 4,
+				'initFood' : 100,
+				'initWood' : 100,
+				'accFood'  : 10,
+				'accWood'  : 10,
 			},
 
 			'generals': [
@@ -17,25 +25,37 @@
 					'gid'   : 16,
 					'lv'    : 1,
 					'name'  : '关羽',
+					'att'   : 200,
+					'def'   : 0,
+					'hp'    : 1100,
+					'speed' : 1,
+					'init'  : 0,
 				},
 				{
 					'armyId': 2,
 					'gid'   : 17,
 					'lv'    : 1,
 					'name'  : '张飞',
+					'att'   : 200,
+					'def'   : 0,
+					'hp'    : 1100,
+					'speed' : 1,
+					'init'  : 0,
 				},
 			],
 
 			'buildings': [
 				{
-					'bid' : 1,
-					'name': '主城',
-					'lv'  : 8,
+					'bid'    : 1,
+					'name'   : '主城',
+					'lv'  	 : 8,
+					'lvNeed' : 1,
 				},
 				{
-					'bid' : 2,
-					'name': '民居',
-					'lv'  : 1,
+					'bid'    : 2,
+					'name'   : '民居',
+					'lv'     : 1,
+					'lvNeed' : 1,
 				},
 			],
 

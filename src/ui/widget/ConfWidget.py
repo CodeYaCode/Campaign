@@ -18,7 +18,8 @@ from src.ui.widget.DetailDialog import DetailDialog
 
 # COLOR
 ADD_BTN_COLOR  = '#5FBA7D'
-CONF_BTN_COLOR = '#317EF3'
+# CONF_BTN_COLOR = '#F1F2F6'
+CONF_BTN_COLOR = '#ABCDEF'
 
 # QSS
 ADD_BTN_QSS = '''
@@ -32,7 +33,7 @@ BTN_STYLE = '''
 	height: 25px;
 	border: 0;
 	margin-top: 2px;
-	color: white;
+	color: black;
 	background-color: %s
 ''' % (CONF_BTN_COLOR)
 
